@@ -10,11 +10,13 @@ import { config } from '@keystone-next/keystone';
 
 // Look in the schema file for how we define our lists, and how users interact with them through graphql or the Admin UI
 import { statelessSessions } from '@keystone-next/keystone/session';
-import { lists } from './schema';
+import { lists } from './schemas';
 
 // Keystone auth is configured separately - check out the basic auth setup we are importing from our auth file.
 import { withAuth } from './auth';
 import { PORT, DATABASE_URL, SESSION_MAX_AGE, SESSION_SECRET } from './config';
+
+import { insertSeedData } from './seed-data';
 
 const session = statelessSessions({
   maxAge: SESSION_MAX_AGE,
@@ -29,8 +31,21 @@ export default withAuth(
       provider: 'postgresql',
       useMigrations: true,
       url: DATABASE_URL,
+      onConnect: async (context) => {
+        if (process.argv.includes('--seed-data')) {
+          console.log('Starting Seeding 🌱 ');
+          await insertSeedData(context.prisma);
+          console.log('Finished Seeding 🌱 ');
+        }
+      },
     },
-    server: { port: PORT },
+    server: {
+      port: PORT,
+      cors: {
+        origin: '*',
+        credentials: true,
+      },
+    },
     // This config allows us to set up features of the Admin UI https://keystonejs.com/docs/apis/config#ui
     ui: {
       // For our starter, we check that someone has session data before letting them see the Admin UI.
