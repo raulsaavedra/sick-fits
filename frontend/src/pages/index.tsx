@@ -1,5 +1,1 @@
-import React from 'react';
-
-export default function Index() {
-  return <div>Hello</div>;
-}
+export { default } from './products';

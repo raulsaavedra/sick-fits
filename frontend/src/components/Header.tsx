@@ -3,31 +3,17 @@ import Link from 'next/link';
 import Nav from './Nav';
 import { styled } from '../stitches';
 
-const SLogo = styled('h1', {
-  width: 'fit-content',
-  fontFamily: 'radnika_next',
-  fontSize: '$5xl',
-  marginLeft: '2rem',
-  background: 'red',
-  position: 'relative',
-  zIndex: '2',
-  transform: 'skew(-7deg)',
-  a: {
-    color: 'white',
-    textDecoration: 'none',
-    textTransform: 'uppercase',
-    padding: '0.5rem 1rem',
-  },
-});
 const SHeader = styled('header', {
-  padding: '1rem 2rem',
+  padding: '0rem 2rem',
   maxWidth: '$extraLarge',
   margin: '0 auto',
 });
 const SBar = styled('div', {
-  display: 'grid',
+  display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'center',
+  '@bpMd': {
+    flexDirection: 'column',
+  },
   borderBottom: '10px solid black',
 });
 const SSubBar = styled('div', {
@@ -37,7 +23,28 @@ const SSubBar = styled('div', {
   fontWeight: '700',
   color: '$black',
 });
-
+const SLogo = styled('h1', {
+  width: 'fit-content',
+  fontFamily: 'radnika_next',
+  fontSize: '$5xl',
+  marginLeft: '2rem',
+  background: 'red',
+  position: 'relative',
+  zIndex: '2',
+  transform: 'skew(-7deg)',
+  '@bpMd': {
+    margin: '0 auto',
+    marginTop: '30px',
+    fontSize: '$4xl',
+    marginBottom: '40px',
+  },
+  a: {
+    color: 'white',
+    textDecoration: 'none',
+    textTransform: 'uppercase',
+    padding: '0.5rem 1rem',
+  },
+});
 export default function Header() {
   return (
     <SHeader>
@@ -45,11 +52,11 @@ export default function Header() {
         <SLogo>
           <Link href="/">Sick fits</Link>
         </SLogo>
+        <Nav />
       </SBar>
       <SSubBar>
         <p>Search</p>
       </SSubBar>
-      <Nav />
     </SHeader>
   );
 }

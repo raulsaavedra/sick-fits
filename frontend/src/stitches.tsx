@@ -36,8 +36,25 @@ export const { styled, css, getCssText, globalCss } = createStitches({
     },
   },
   media: {
+    bpLg: '(max-width: 1280px)',
     bpMd: '(max-width: 1024px)',
     bpSm: '(max-width: 640px)',
     bpExSm: '(max-width: 425px)',
+  },
+  utils: {
+    textBackground: (value: boolean) => {
+      if (value === true) {
+        return {
+          color: 'white',
+          background: '$red',
+          width: 'fit-content',
+          margin: '0 auto',
+          padding: '2px 10px',
+          textAlign: 'center',
+          transform: 'skew(-5deg)',
+        };
+      }
+      return {};
+    },
   },
 });
