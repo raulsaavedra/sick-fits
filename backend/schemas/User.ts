@@ -1,6 +1,6 @@
-import { list } from '@keystone-next/keystone';
+import { list } from '@keystone-6/core';
 
-import { text, password } from '@keystone-next/keystone/fields';
+import { text, password } from '@keystone-6/core/fields';
 
 export const User = list({
   fields: {

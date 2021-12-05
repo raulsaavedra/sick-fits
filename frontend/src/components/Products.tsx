@@ -3,7 +3,8 @@ import gql from 'graphql-tag';
 import React from 'react';
 import { TProduct } from '../../lib/types/codegen';
 import { styled } from '../stitches';
-import { SHeadingPrimary, SHeadingSecondary, SText } from './Base/Typography';
+import { SContainer } from './Base/SLayout';
+import { SHeadingPrimary, SHeadingSecondary, SText } from './Base/STypography';
 import Product from './Product';
 
 const ALL_PRODUCTS_QUERY = gql`
@@ -41,12 +42,12 @@ export default function Products() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
   return (
-    <div>
+    <SContainer>
       <SProductList>
         {data.products.map((product: TProduct) => (
           <Product product={product} key={product.id} />
         ))}
       </SProductList>
-    </div>
+    </SContainer>
   );
 }

@@ -1,6 +1,6 @@
-import { list } from '@keystone-next/keystone';
-import { cloudinaryImage } from '@keystone-next/cloudinary';
-import { relationship, text } from '@keystone-next/keystone/fields';
+import { list } from '@keystone-6/core';
+import { cloudinaryImage } from '@keystone-6/cloudinary';
+import { relationship, text } from '@keystone-6/core/fields';
 
 interface Cloudinary {
   cloudName: string;

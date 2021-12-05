@@ -1,11 +1,6 @@
-import { list } from '@keystone-next/keystone';
+import { list } from '@keystone-6/core';
 
-import {
-  integer,
-  relationship,
-  select,
-  text,
-} from '@keystone-next/keystone/fields';
+import { integer, relationship, select, text } from '@keystone-6/core/fields';
 
 export const Product = list({
   fields: {

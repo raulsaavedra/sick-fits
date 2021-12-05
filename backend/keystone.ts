@@ -6,10 +6,10 @@ It looks at the default export, and expects a Keystone config object.
 You can find all the config options in our docs here: https://keystonejs.com/docs/apis/config
 */
 
-import { config } from '@keystone-next/keystone';
+import { config } from '@keystone-6/core';
 
 // Look in the schema file for how we define our lists, and how users interact with them through graphql or the Admin UI
-import { statelessSessions } from '@keystone-next/keystone/session';
+import { statelessSessions } from '@keystone-6/core/session';
 import { lists } from './schemas';
 
 // Keystone auth is configured separately - check out the basic auth setup we are importing from our auth file.

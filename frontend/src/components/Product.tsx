@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { styled } from '../stitches';
 import { TProduct } from '../../lib/types/codegen';
 import formatMoney from '../../lib/formatMoney';
-import { SText } from './Base/Typography';
+import { SText } from './Base/STypography';
 
 const SProduct = styled('div', {
   display: 'flex',
@@ -20,6 +20,7 @@ const SProductTitle = styled('h4', {
   lineHeight: '1.3',
   fontWeight: 'bold',
   marginTop: '-40px',
+  pointerEvents: 'none',
 });
 const SProductPrice = styled('p', {
   textBackground: true,

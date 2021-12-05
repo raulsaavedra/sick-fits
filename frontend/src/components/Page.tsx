@@ -39,9 +39,7 @@ const SGlobal = globalCss({
   },
 });
 const SInner = styled('div', {
-  maxWidth: '$large',
-  margin: '0 auto',
-  padding: '2rem',
+  padding: '3rem 0rem',
 });
 export default function Page({ children }: { children: ReactNode }) {
   SGlobal();
