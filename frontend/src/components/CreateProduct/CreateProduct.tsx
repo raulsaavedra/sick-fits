@@ -3,10 +3,17 @@ import gql from 'graphql-tag';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { MdClose, MdSend } from 'react-icons/md';
-import { SButton } from '../Base/SButton';
-import { SForm, SFormGradient, SFormGroup, SFormInput } from '../Base/SForm';
-import { SContainer } from '../Base/SLayout';
-import { SFormLabel, SIcon } from '../Base/STypography';
+import { SButton } from '../Base/Button/SButton';
+import {
+  SForm,
+  SFormGradient,
+  SFormGroup,
+  SFormInput,
+} from '../Base/Form/SForm';
+import { SContainer } from '../Base/Layout/SLayout';
+import { SFormLabel, SIcon } from '../Base/Typography/STypography';
+import DisplayError from '../Error';
+import { ALL_PRODUCTS_QUERY } from '../Products';
 
 interface TInputs {
   name: string;
@@ -53,7 +60,12 @@ export default function CreateProduct() {
       description: 'so niiiicee',
     },
   });
-  const [createProduct, { loading }] = useMutation(CREATE_PRODUCT_MUTATION);
+  const [createProduct, { loading, error }] = useMutation(
+    CREATE_PRODUCT_MUTATION,
+    {
+      refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
+    }
+  );
   const onSubmit = async (data: TInputs) => {
     const { name, price, description } = data;
     const photo = data.photo[0];
@@ -76,6 +88,9 @@ export default function CreateProduct() {
       <SForm onSubmit={handleSubmit(onSubmit)}>
         <fieldset aria-busy={loading} aria-disabled={loading}>
           <SFormGradient />
+          <SFormGroup>
+            <DisplayError error={error} />
+          </SFormGroup>
           <SFormGroup>
             <SFormLabel htmlFor="name">Photo</SFormLabel>
             <SFormInput

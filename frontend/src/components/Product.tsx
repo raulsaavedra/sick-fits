@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { styled } from '../stitches';
 import { TProduct } from '../../lib/types/codegen';
 import formatMoney from '../../lib/formatMoney';
-import { SText } from './Base/STypography';
+import { SText } from './Base/Typography/STypography';
 
 const SProduct = styled('div', {
   display: 'flex',
