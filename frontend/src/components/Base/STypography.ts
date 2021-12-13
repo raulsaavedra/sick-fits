@@ -1,4 +1,4 @@
-import { styled } from '../../../stitches';
+import { styled } from '../../stitches';
 
 export const SHeadingPrimary = styled('h1', {
   fontSize: '$3xl',

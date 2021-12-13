@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import { TProduct } from '../../lib/types/codegen';
 import { styled } from '../stitches';
-import { SContainer } from './Base/Layout/SLayout';
+import { SContainer } from './Base/SLayout';
 import DisplayError from './Error';
 
 export const SINGLE_PRODUCT_QUERY = gql`

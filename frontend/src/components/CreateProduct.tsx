@@ -4,20 +4,16 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { MdClose, MdReplay, MdSend } from 'react-icons/md';
 import { useRouter } from 'next/router';
-import { SButton } from './Base/Button/SButton';
+import { SButton } from './Base/SButton';
 import {
   SForm,
   SFormError,
   SFormGradient,
   SFormGroup,
   SFormInput,
-} from './Base/Form/SForm';
-import { SContainer } from './Base/Layout/SLayout';
-import {
-  SFormLabel,
-  SHeadingSecondary,
-  SIcon,
-} from './Base/Typography/STypography';
+} from './Base/SForm';
+import { SContainer } from './Base/SLayout';
+import { SFormLabel, SHeadingSecondary, SIcon } from './Base/STypography';
 import DisplayError from './Error';
 import { ALL_PRODUCTS_QUERY } from './Products';
 

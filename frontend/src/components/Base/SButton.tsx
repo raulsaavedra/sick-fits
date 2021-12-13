@@ -1,4 +1,4 @@
-import { styled } from '../../../stitches';
+import { styled } from '../../stitches';
 
 export const SButton = styled('button', {
   display: 'flex',

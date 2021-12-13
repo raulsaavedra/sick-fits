@@ -4,21 +4,21 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { MdClose, MdReplay, MdSend } from 'react-icons/md';
-import { SButton } from './Base/Button/SButton';
+import { SButton } from './Base/SButton';
 import {
   SForm,
   SFormError,
   SFormGradient,
   SFormGroup,
   SFormInput,
-} from './Base/Form/SForm';
-import { SContainer } from './Base/Layout/SLayout';
+} from './Base/SForm';
+import { SContainer } from './Base/SLayout';
 import {
   SFormLabel,
   SHeadingSecondary,
   SIcon,
   SText,
-} from './Base/Typography/STypography';
+} from './Base/STypography';
 import DisplayError from './Error';
 
 const SINGLE_PRODUCT_QUERY = gql`
@@ -70,6 +70,7 @@ export default function UpdateProduct({ id }: { id: string }) {
     setValue,
     formState: { errors },
   } = useForm<TInputs>();
+
   const { data: dataSingle, loading: loadingSingle } = useQuery(
     SINGLE_PRODUCT_QUERY,
     {
@@ -195,7 +196,7 @@ export default function UpdateProduct({ id }: { id: string }) {
             </SButton>
           </SFormGroup>
           <SFormGroup>
-            <SButton type="submit" disabled={loadingUpdate}>
+            <SButton type="submit" disabled={loadingUpdate || loadingSingle}>
               <SIcon>
                 <MdSend />
               </SIcon>

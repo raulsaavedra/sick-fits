@@ -3,13 +3,9 @@ import gql from 'graphql-tag';
 import React from 'react';
 import { TProduct } from '../../lib/types/codegen';
 import { styled } from '../stitches';
-import { SContainer } from './Base/Layout/SLayout';
-import {
-  SHeadingPrimary,
-  SHeadingSecondary,
-  SText,
-} from './Base/Typography/STypography';
-import Product from './Product';
+import { SContainer } from './Base/SLayout';
+import { SHeadingPrimary, SHeadingSecondary, SText } from './Base/STypography';
+import Product from './Product/Product';
 
 export const ALL_PRODUCTS_QUERY = gql`
   query Products {
