@@ -57,27 +57,6 @@ export const SProductButtonList = styled('div', {
   justifyContent: 'space-between',
 });
 
-export const SProductButton = styled('a', {
-  fontFamily: 'Open Sans',
-  display: 'flex',
-  alignItems: 'center',
-  border: '1px solid $gray',
-  padding: '10px 7.5px',
-  transition: 'all 0.2s ease',
-  borderRadius: '2px',
-  background: 0,
-  color: '$black',
-  cursor: 'pointer',
-  '&:hover': {
-    textDecoration: 'none',
-  },
-  [`${SText}`]: {
-    fontSize: '14px',
-    fontWeight: 'bold',
-    lineHeight: '1',
-    margin: '0',
-  },
-});
 export const SLink = styled('div', {
   position: 'absolute',
   width: '100%',

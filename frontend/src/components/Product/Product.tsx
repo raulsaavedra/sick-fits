@@ -11,10 +11,10 @@ import {
   SProductPrice,
   SProductImage,
   SProductButtonList,
-  SProductButton,
   SLink,
 } from './SProduct';
 import { SText } from '../Base/STypography';
+import { SButtonBorder } from '../Base/SButton';
 
 export default function Product({ product }: { product: TProduct }) {
   return (
@@ -42,14 +42,14 @@ export default function Product({ product }: { product: TProduct }) {
         </SText>
         <SProductButtonList>
           <Link href={`/update/${product.id}`} passHref>
-            <SProductButton>
+            <SButtonBorder>
               <SText>Edit ✏️</SText>
-            </SProductButton>
+            </SButtonBorder>
           </Link>
           <DeleteProduct id={product.id}>Delete ❌</DeleteProduct>
-          <SProductButton as="button">
+          <SButtonBorder as="button">
             <SText>Add to Cart 🛒</SText>
-          </SProductButton>
+          </SButtonBorder>
         </SProductButtonList>
       </SProductContent>
     </SProduct>

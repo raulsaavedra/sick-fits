@@ -1,6 +1,6 @@
 import React from 'react';
+import { SButtonBorder } from './Base/SButton';
 import { SText } from './Base/STypography';
-import { SProductButton } from './Product/SProduct';
 
 export default function DeleteProduct({
   id,
@@ -10,8 +10,8 @@ export default function DeleteProduct({
   children: React.ReactNode;
 }) {
   return (
-    <SProductButton as="button">
+    <SButtonBorder as="button">
       <SText>{children}</SText>
-    </SProductButton>
+    </SButtonBorder>
   );
 }
