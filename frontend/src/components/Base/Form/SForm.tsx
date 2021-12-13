@@ -45,3 +45,12 @@ export const SFormInput = styled('input', {
     background: '$lightGray',
   },
 });
+
+export const SFormError = styled('div', {
+  fontSize: '$md',
+  fontWeight: 'normal',
+  lineHeight: '1',
+  color: '$red',
+  margin: 0,
+  marginTop: '5px',
+});

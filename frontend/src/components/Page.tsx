@@ -24,7 +24,7 @@ const SGlobal = globalCss({
       '"Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
     padding: 0,
     margin: 0,
-    lineHeight: 2,
+    lineHeight: 1,
     fontSize: '1.5rem',
   },
   a: {

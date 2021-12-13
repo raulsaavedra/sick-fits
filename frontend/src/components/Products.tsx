@@ -43,8 +43,19 @@ const SProductList = styled('div', {
 
 export default function Products() {
   const { loading, error, data } = useQuery(ALL_PRODUCTS_QUERY);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (loading)
+    return (
+      <SContainer>
+        <p>Loading...</p>
+      </SContainer>
+    );
+
+  if (error)
+    return (
+      <SContainer>
+        <p>Error: {error.message}</p>
+      </SContainer>
+    );
   return (
     <SContainer>
       <SProductList>

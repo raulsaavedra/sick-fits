@@ -2,18 +2,24 @@ import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { MdClose, MdSend } from 'react-icons/md';
-import { SButton } from '../Base/Button/SButton';
+import { MdClose, MdReplay, MdSend } from 'react-icons/md';
+import { useRouter } from 'next/router';
+import { SButton } from './Base/Button/SButton';
 import {
   SForm,
+  SFormError,
   SFormGradient,
   SFormGroup,
   SFormInput,
-} from '../Base/Form/SForm';
-import { SContainer } from '../Base/Layout/SLayout';
-import { SFormLabel, SIcon } from '../Base/Typography/STypography';
-import DisplayError from '../Error';
-import { ALL_PRODUCTS_QUERY } from '../Products';
+} from './Base/Form/SForm';
+import { SContainer } from './Base/Layout/SLayout';
+import {
+  SFormLabel,
+  SHeadingSecondary,
+  SIcon,
+} from './Base/Typography/STypography';
+import DisplayError from './Error';
+import { ALL_PRODUCTS_QUERY } from './Products';
 
 interface TInputs {
   name: string;
@@ -52,7 +58,14 @@ const CREATE_PRODUCT_MUTATION = gql`
 `;
 
 export default function CreateProduct() {
-  const { register, handleSubmit, reset, setValue } = useForm<TInputs>({
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm<TInputs>({
     defaultValues: {
       name: 'Nice Shoes',
       price: 100,
@@ -77,14 +90,18 @@ export default function CreateProduct() {
         description,
       },
     });
-    console.log(res);
+    if (res) {
+      router.push('/');
+    }
   };
   const clearForm = () => {
     setValue('name', '');
+    setValue('description', '');
     setValue('price', '');
   };
   return (
     <SContainer>
+      <SHeadingSecondary>Create Product</SHeadingSecondary>
       <SForm onSubmit={handleSubmit(onSubmit)}>
         <fieldset aria-busy={loading} aria-disabled={loading}>
           <SFormGradient />
@@ -98,6 +115,7 @@ export default function CreateProduct() {
               disabled={loading}
               {...register('photo', { required: true })}
             />
+            {errors.photo && <SFormError>This field is required</SFormError>}
           </SFormGroup>
           <SFormGroup>
             <SFormLabel htmlFor="name">Name</SFormLabel>
@@ -106,6 +124,7 @@ export default function CreateProduct() {
               {...register('name', { required: true })}
               disabled={loading}
             />
+            {errors.name && <SFormError>This field is required</SFormError>}
           </SFormGroup>
           <SFormGroup>
             <SFormLabel htmlFor="price">Price</SFormLabel>
@@ -114,6 +133,7 @@ export default function CreateProduct() {
               disabled={loading}
               {...register('price', { required: true, min: 0 })}
             />
+            {errors.price && <SFormError>This field is required</SFormError>}
           </SFormGroup>
           <SFormGroup>
             <SFormLabel htmlFor="description">Description</SFormLabel>
@@ -122,11 +142,14 @@ export default function CreateProduct() {
               disabled={loading}
               {...register('description', { required: true })}
             />
+            {errors.description && (
+              <SFormError>This field is required</SFormError>
+            )}
           </SFormGroup>
           <SFormGroup css={{ display: 'flex', flexWrap: 'wrap' }}>
             <SButton type="button" onClick={(e) => reset()} disabled={loading}>
               <SIcon>
-                <MdClose />
+                <MdReplay />
               </SIcon>
               Reset Form
             </SButton>

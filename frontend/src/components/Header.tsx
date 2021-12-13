@@ -7,6 +7,7 @@ const SHeader = styled('header', {
   padding: '0rem 2rem',
   maxWidth: '$extraLarge',
   margin: '0 auto',
+  lineHeight: '2',
 });
 const SBar = styled('div', {
   display: 'flex',

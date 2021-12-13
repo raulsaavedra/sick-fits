@@ -1,5 +1,14 @@
 import React from 'react';
+import SingleProduct from '../../components/SingleProduct';
 
-export default function ProductPage() {
-  return <div />;
+interface IQuery {
+  id: string;
+}
+
+export default function ProductPage({ query }: { query: IQuery }) {
+  return (
+    <div>
+      <SingleProduct id={query.id} />
+    </div>
+  );
 }
