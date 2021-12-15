@@ -1,5 +1,4 @@
 import { useMutation } from '@apollo/client';
-import gql from 'graphql-tag';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { MdClose, MdReplay, MdSend } from 'react-icons/md';
@@ -15,43 +14,17 @@ import {
 import { SContainer } from './Base/SLayout';
 import { SFormLabel, SHeadingSecondary, SIcon } from './Base/STypography';
 import DisplayError from './Error';
-import { ALL_PRODUCTS_QUERY } from './Products';
+import {
+  AllProductsDocument,
+  useCreateProductMutation,
+} from '../../types/generated-queries';
 
-interface TInputs {
+type TInputs = {
   name: string;
   price: number | string;
   photo: FileList | string;
   description: string;
-}
-const CREATE_PRODUCT_MUTATION = gql`
-  mutation createProduct(
-    $name: String!
-    $price: Int!
-    $photo: Upload!
-    $description: String!
-  ) {
-    createProduct(
-      data: {
-        name: $name
-        price: $price
-        photo: { create: { image: $photo, altText: $name } }
-        description: $description
-      }
-    ) {
-      id
-      name
-      price
-      photo {
-        image {
-          encoding
-          publicUrl
-          publicUrlTransformed
-        }
-      }
-      description
-    }
-  }
-`;
+};
 
 export default function CreateProduct() {
   const router = useRouter();
@@ -69,19 +42,17 @@ export default function CreateProduct() {
       description: 'so niiiicee',
     },
   });
-  const [createProduct, { loading, error }] = useMutation(
-    CREATE_PRODUCT_MUTATION,
-    {
-      refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
-    }
-  );
+  const [createProduct, { loading, error }] = useCreateProductMutation({
+    refetchQueries: [{ query: AllProductsDocument }],
+  });
   const onSubmit = async (data: TInputs) => {
     const { name, price, description } = data;
     const photo = data.photo[0];
+    const formattedPrice = parseInt(price.toString());
     const res = await createProduct({
       variables: {
         name,
-        price,
+        price: formattedPrice,
         photo,
         description,
       },

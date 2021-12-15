@@ -1,0 +1,22 @@
+mutation updateProduct(
+	$id: ID!
+	$name: String!
+	$description: String!
+	$price: Int!
+	$photo: Upload!
+) {
+	updateProduct(
+		where: { id: $id }
+		data: {
+			name: $name
+			description: $description
+			price: $price
+			photo: { create: { image: $photo, altText: $name } }
+		}
+	) {
+		id
+		name
+		description
+		price
+	}
+}

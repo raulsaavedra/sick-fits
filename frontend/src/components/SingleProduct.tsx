@@ -1,32 +1,8 @@
-import { useQuery } from '@apollo/client';
-import gql from 'graphql-tag';
-import { TProduct } from '../../lib/types/codegen';
+import { useSingleProductQuery } from '../../types/generated-queries';
 import { styled } from '../stitches';
 import { SContainer } from './Base/SLayout';
 import DisplayError from './Error';
 
-export const SINGLE_PRODUCT_QUERY = gql`
-  query SingleProduct($id: ID!) {
-    product(where: { id: $id }) {
-      name
-      price
-      description
-      id
-      photo {
-        image {
-          publicUrlTransformed
-        }
-      }
-    }
-  }
-`;
-
-interface TSingleProductData {
-  product: TProduct;
-}
-interface TSingleProductVars {
-  id: string;
-}
 const SSingleProductGrid = styled('div', {
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
@@ -38,10 +14,7 @@ const SSingleProductImage = styled('img', {
   objectFit: 'cover',
 });
 export default function SingleProduct({ id }: { id: string }) {
-  const { loading, error, data } = useQuery<
-    TSingleProductData,
-    TSingleProductVars
-  >(SINGLE_PRODUCT_QUERY, {
+  const { loading, error, data } = useSingleProductQuery({
     variables: { id },
   });
   if (loading)
@@ -61,12 +34,12 @@ export default function SingleProduct({ id }: { id: string }) {
       <SContainer>
         <SSingleProductGrid>
           <SSingleProductImage
-            src={data.product.photo?.image?.publicUrlTransformed ?? ''}
-            alt={data.product.photo?.altText ?? ''}
+            src={data?.product?.photo?.image?.publicUrlTransformed ?? ''}
+            alt={data?.product?.photo?.altText ?? ''}
           />
           <div>
-            <h2>{data.product.name}</h2>
-            <p>{data.product.description}</p>
+            <h2>{data?.product?.name}</h2>
+            <p>{data?.product?.description}</p>
           </div>
         </SSingleProductGrid>
       </SContainer>

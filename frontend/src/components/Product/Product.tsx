@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { styled } from '../../stitches';
-import { TProduct } from '../../../lib/types/codegen';
 import formatMoney from '../../../lib/formatMoney';
 import DeleteProduct from '../DeleteProduct';
 import {
@@ -15,8 +14,13 @@ import {
 } from './SProduct';
 import { SText } from '../Base/STypography';
 import { SButtonBorder } from '../Base/SButton';
+import { TProduct } from '../../../types/types';
 
-export default function Product({ product }: { product: TProduct }) {
+type TProductProps = {
+  product: TProduct;
+};
+
+export default function Product({ product }: TProductProps) {
   return (
     <SProduct>
       <div>

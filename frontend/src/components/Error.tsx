@@ -1,6 +1,6 @@
 import { ApolloError } from '@apollo/client';
+import { TUserAuthenticationWithPasswordFailure } from '../../types/types';
 import { styled } from '../stitches';
-import { TUserAuthenticationWithPasswordFailure } from '../../lib/types/codegen';
 
 const SError = styled('div', {
   padding: '2rem',

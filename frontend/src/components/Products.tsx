@@ -1,34 +1,16 @@
-import { useQuery } from '@apollo/client';
-import gql from 'graphql-tag';
 import React from 'react';
-import { TProduct } from '../../lib/types/codegen';
+import { perPage } from '../../config';
+import { useAllProductsQuery } from '../../types/generated-queries';
 import { styled } from '../stitches';
 import { SContainer } from './Base/SLayout';
-import { SHeadingPrimary, SHeadingSecondary, SText } from './Base/STypography';
+import DisplayError from './Error';
 import Product from './Product/Product';
-
-export const ALL_PRODUCTS_QUERY = gql`
-  query Products {
-    products {
-      id
-      name
-      description
-      price
-      photo {
-        image {
-          encoding
-          publicUrl
-          publicUrlTransformed
-        }
-      }
-    }
-  }
-`;
 
 const SProductList = styled('div', {
   display: 'grid',
   gridTemplateColumns: '1fr 1fr 1fr',
   gap: '60px',
+  marginBottom: '60px',
   '@bpLg': {
     gridTemplateColumns: '1fr 1fr',
   },
@@ -37,8 +19,13 @@ const SProductList = styled('div', {
   },
 });
 
-export default function Products() {
-  const { loading, error, data } = useQuery(ALL_PRODUCTS_QUERY);
+export default function Products({ page }: { page: number }) {
+  const { loading, error, data } = useAllProductsQuery({
+    variables: {
+      skip: page * perPage - perPage,
+      take: perPage,
+    },
+  });
   if (loading)
     return (
       <SContainer>
@@ -49,13 +36,13 @@ export default function Products() {
   if (error)
     return (
       <SContainer>
-        <p>Error: {error.message}</p>
+        Error: <DisplayError error={error} />
       </SContainer>
     );
   return (
     <SContainer>
       <SProductList>
-        {data.products.map((product: TProduct) => (
+        {data?.products?.map((product) => (
           <Product product={product} key={product.id} />
         ))}
       </SProductList>

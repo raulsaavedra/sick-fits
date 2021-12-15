@@ -1,9 +1,11 @@
-import { useMutation, useQuery } from '@apollo/client';
-import gql from 'graphql-tag';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { MdClose, MdReplay, MdSend } from 'react-icons/md';
+import {
+  useSingleProductQuery,
+  useUpdateProductMutation,
+} from '../../types/generated-queries';
 import { SButton } from './Base/SButton';
 import {
   SForm,
@@ -21,46 +23,12 @@ import {
 } from './Base/STypography';
 import DisplayError from './Error';
 
-const SINGLE_PRODUCT_QUERY = gql`
-  query SINGLE_PRODUCT_QUERY($id: ID!) {
-    product(where: { id: $id }) {
-      id
-      name
-      description
-      price
-    }
-  }
-`;
-const UPDATE_PRODUCT_MUTATION = gql`
-  mutation UPDATE_PRODUCT_MUTATION(
-    $id: ID!
-    $name: String!
-    $description: String!
-    $price: Int!
-    $photo: Upload!
-  ) {
-    updateProduct(
-      where: { id: $id }
-      data: {
-        name: $name
-        description: $description
-        price: $price
-        photo: { create: { image: $photo, altText: $name } }
-      }
-    ) {
-      id
-      name
-      description
-      price
-    }
-  }
-`;
-interface TInputs {
+type TInputs = {
   name: string;
   price: number | string;
   photo: FileList | string;
   description: string;
-}
+};
 export default function UpdateProduct({ id }: { id: string }) {
   const router = useRouter();
 
@@ -71,31 +39,32 @@ export default function UpdateProduct({ id }: { id: string }) {
     formState: { errors },
   } = useForm<TInputs>();
 
-  const { data: dataSingle, loading: loadingSingle } = useQuery(
-    SINGLE_PRODUCT_QUERY,
-    {
-      variables: { id },
-      onCompleted: (data) => {
-        if (data && data.product) {
-          setValue('name', data.product.name);
-          setValue('description', data.product.description);
-          setValue('price', data.product.price);
-        }
-      },
-    }
-  );
+  const { data: dataSingle, loading: loadingSingle } = useSingleProductQuery({
+    variables: { id },
+    onCompleted: (data) => {
+      if (data && data.product) {
+        setValue('name', data.product.name ? data.product.name : '');
+        setValue(
+          'description',
+          data.product.description ? data.product.description : ''
+        );
+        setValue('price', data.product.price ? data.product.price : '');
+      }
+    },
+  });
   const [
     updateProduct,
     { loading: loadingUpdate, error: errorUpdate },
-  ] = useMutation(UPDATE_PRODUCT_MUTATION);
+  ] = useUpdateProductMutation();
   const onSubmit = async (data: TInputs) => {
     const { name, price, description } = data;
     const photo = data.photo[0];
+    const formattedPrice = parseInt(price.toString());
     const res = await updateProduct({
       variables: {
         id,
         name,
-        price,
+        price: formattedPrice,
         photo,
         description,
       },
@@ -105,18 +74,17 @@ export default function UpdateProduct({ id }: { id: string }) {
     }
   };
   const resetForm = () => {
-    setValue(
-      'name',
-      dataSingle && dataSingle.product ? dataSingle.product.name : ''
-    );
-    setValue(
-      'description',
-      dataSingle && dataSingle.product ? dataSingle.product.description : ''
-    );
-    setValue(
-      'price',
-      dataSingle && dataSingle.product ? dataSingle.product.price : ''
-    );
+    if (dataSingle && dataSingle.product) {
+      setValue('name', dataSingle.product.name ? dataSingle.product.name : '');
+      setValue(
+        'description',
+        dataSingle.product.description ? dataSingle.product.description : ''
+      );
+      setValue(
+        'price',
+        dataSingle.product.price ? dataSingle.product.price : ''
+      );
+    }
   };
   const clearForm = () => {
     setValue('name', '');

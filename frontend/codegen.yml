@@ -1,10 +1,19 @@
+overwrite: true
 schema: http://localhost:3000/api/graphql
+documents: "graphql/*.graphql"
+
 generates:
-  lib/types/codegen.ts:
+  types/types.ts:
     plugins:
       - typescript
-      - typescript-operations
-      - typescript-react-apollo
+    config: 
+        typesPrefix: T
+  types/generated-queries.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+      - "typescript-apollo-client-helpers"
     config:
-      typesPrefix: T
+      withRefetchFn: true
       withHooks: true
