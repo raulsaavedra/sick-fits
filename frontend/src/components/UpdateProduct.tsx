@@ -41,14 +41,11 @@ export default function UpdateProduct({ id }: { id: string }) {
 
   const { data: dataSingle, loading: loadingSingle } = useSingleProductQuery({
     variables: { id },
-    onCompleted: (data) => {
-      if (data && data.product) {
-        setValue('name', data.product.name ? data.product.name : '');
-        setValue(
-          'description',
-          data.product.description ? data.product.description : ''
-        );
-        setValue('price', data.product.price ? data.product.price : '');
+    onCompleted: ({ product }) => {
+      if (product) {
+        setValue('name', product.name ? product.name : '');
+        setValue('description', product.description ? product.description : '');
+        setValue('price', product.price ? product.price : '');
       }
     },
   });
@@ -69,8 +66,8 @@ export default function UpdateProduct({ id }: { id: string }) {
         description,
       },
     });
-    if (res) {
-      router.push('/');
+    if (res && res.data && res.data.updateProduct) {
+      router.push(`/product/${res.data.updateProduct.id}`);
     }
   };
   const resetForm = () => {

@@ -27,8 +27,8 @@ export default function Products({ page }: { page: number }) {
       skip: page * perPage - perPage,
       take: perPage,
     },
-    onCompleted: () => {
-      if (page > 1 && data && data.products && data.products.length === 0) {
+    onCompleted: ({ products }) => {
+      if (page > 1 && products && products.length === 0) {
         router.push({
           pathname: router.pathname,
           query: { page: page - 1 },
