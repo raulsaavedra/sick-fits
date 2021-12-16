@@ -31,7 +31,7 @@ export default function DeleteProduct({
         }
       }}
     >
-      <SText>{children}</SText>
+      <SText>{loading ? 'Deleting...' : children}</SText>
     </SButtonBorder>
   );
 }

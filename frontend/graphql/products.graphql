@@ -1,4 +1,4 @@
-query allProducts($skip: Int = 0, $take: Int) {
+query products($skip: Int = 0, $take: Int) {
   products(skip: $skip, take: $take) {
     id
     name

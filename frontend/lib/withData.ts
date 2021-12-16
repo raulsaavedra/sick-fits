@@ -1,11 +1,16 @@
 import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
-import { onError } from '@apollo/link-error';
+import { onError } from '@apollo/client/link/error';
 import { getDataFromTree } from '@apollo/client/react/ssr';
 import { createUploadLink } from 'apollo-upload-client';
 import withApollo from 'next-with-apollo';
 import type { IncomingHttpHeaders } from 'http';
 import { endpoint, prodEndpoint } from '../config';
+import paginationField from './paginationField';
+import { TypedTypePolicies } from '../types/generated-queries';
 
+const productsTypePolicy: TypedTypePolicies = {
+  products: paginationField(),
+};
 function createClient({
   headers,
   initialState,
@@ -29,7 +34,7 @@ function createClient({
           );
       }),
       // this uses apollo-link-http under the hood, so all the options here come from that package
-      createUploadLink({
+      (createUploadLink({
         uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
         fetchOptions: {
           credentials: 'include',
@@ -37,12 +42,14 @@ function createClient({
         headers: {
           cookie: headers?.cookie,
         },
-      }),
+      }) as unknown) as ApolloLink,
     ]),
     cache: new InMemoryCache({
       typePolicies: {
         Query: {
-          fields: {},
+          fields: {
+            ...productsTypePolicy,
+          },
         },
       },
     }).restore(initialState || {}),

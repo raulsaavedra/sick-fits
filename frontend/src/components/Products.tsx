@@ -1,6 +1,7 @@
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import { perPage } from '../../config';
-import { useAllProductsQuery } from '../../types/generated-queries';
+import { useProductsQuery } from '../../types/generated-queries';
 import { styled } from '../stitches';
 import { SContainer } from './Base/SLayout';
 import DisplayError from './Error';
@@ -20,12 +21,22 @@ const SProductList = styled('div', {
 });
 
 export default function Products({ page }: { page: number }) {
-  const { loading, error, data } = useAllProductsQuery({
+  const router = useRouter();
+  const { loading, error, data } = useProductsQuery({
     variables: {
       skip: page * perPage - perPage,
       take: perPage,
     },
+    onCompleted: () => {
+      if (page > 1 && data && data.products && data.products.length === 0) {
+        router.push({
+          pathname: router.pathname,
+          query: { page: page - 1 },
+        });
+      }
+    },
   });
+
   if (loading)
     return (
       <SContainer>
@@ -39,6 +50,7 @@ export default function Products({ page }: { page: number }) {
         Error: <DisplayError error={error} />
       </SContainer>
     );
+
   return (
     <SContainer>
       <SProductList>

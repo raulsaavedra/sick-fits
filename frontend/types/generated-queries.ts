@@ -623,14 +623,6 @@ export type UserWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']>;
 };
 
-export type AllProductsQueryVariables = Exact<{
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
-}>;
-
-
-export type AllProductsQuery = { __typename?: 'Query', products?: Array<{ __typename?: 'Product', id: string, name?: string | null | undefined, description?: string | null | undefined, price?: number | null | undefined, photo?: { __typename?: 'ProductImage', id: string, altText?: string | null | undefined, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null | undefined } | null | undefined } | null | undefined }> | null | undefined };
-
 export type CreateProductMutationVariables = Exact<{
   name: Scalars['String'];
   price: Scalars['Int'];
@@ -647,6 +639,14 @@ export type DeleteProductMutationVariables = Exact<{
 
 
 export type DeleteProductMutation = { __typename?: 'Mutation', deleteProduct?: { __typename?: 'Product', id: string, name?: string | null | undefined } | null | undefined };
+
+export type ProductsQueryVariables = Exact<{
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type ProductsQuery = { __typename?: 'Query', products?: Array<{ __typename?: 'Product', id: string, name?: string | null | undefined, description?: string | null | undefined, price?: number | null | undefined, photo?: { __typename?: 'ProductImage', id: string, altText?: string | null | undefined, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null | undefined } | null | undefined } | null | undefined }> | null | undefined };
 
 export type ProductsCountQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -672,55 +672,6 @@ export type UpdateProductMutationVariables = Exact<{
 export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'Product', id: string, name?: string | null | undefined, description?: string | null | undefined, price?: number | null | undefined } | null | undefined };
 
 
-export const AllProductsDocument = gql`
-    query allProducts($skip: Int = 0, $take: Int) {
-  products(skip: $skip, take: $take) {
-    id
-    name
-    description
-    price
-    photo {
-      id
-      image {
-        publicUrlTransformed
-      }
-      altText
-    }
-  }
-}
-    `;
-
-/**
- * __useAllProductsQuery__
- *
- * To run a query within a React component, call `useAllProductsQuery` and pass it any options that fit your needs.
- * When your component renders, `useAllProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAllProductsQuery({
- *   variables: {
- *      skip: // value for 'skip'
- *      take: // value for 'take'
- *   },
- * });
- */
-export function useAllProductsQuery(baseOptions?: Apollo.QueryHookOptions<AllProductsQuery, AllProductsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AllProductsQuery, AllProductsQueryVariables>(AllProductsDocument, options);
-      }
-export function useAllProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllProductsQuery, AllProductsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AllProductsQuery, AllProductsQueryVariables>(AllProductsDocument, options);
-        }
-export type AllProductsQueryHookResult = ReturnType<typeof useAllProductsQuery>;
-export type AllProductsLazyQueryHookResult = ReturnType<typeof useAllProductsLazyQuery>;
-export type AllProductsQueryResult = Apollo.QueryResult<AllProductsQuery, AllProductsQueryVariables>;
-export function refetchAllProductsQuery(variables?: AllProductsQueryVariables) {
-      return { query: AllProductsDocument, variables: variables }
-    }
 export const CreateProductDocument = gql`
     mutation createProduct($name: String!, $price: Int!, $photo: Upload!, $description: String!) {
   createProduct(
@@ -803,6 +754,55 @@ export function useDeleteProductMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteProductMutationHookResult = ReturnType<typeof useDeleteProductMutation>;
 export type DeleteProductMutationResult = Apollo.MutationResult<DeleteProductMutation>;
 export type DeleteProductMutationOptions = Apollo.BaseMutationOptions<DeleteProductMutation, DeleteProductMutationVariables>;
+export const ProductsDocument = gql`
+    query products($skip: Int = 0, $take: Int) {
+  products(skip: $skip, take: $take) {
+    id
+    name
+    description
+    price
+    photo {
+      id
+      image {
+        publicUrlTransformed
+      }
+      altText
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductsQuery__
+ *
+ * To run a query within a React component, call `useProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductsQuery({
+ *   variables: {
+ *      skip: // value for 'skip'
+ *      take: // value for 'take'
+ *   },
+ * });
+ */
+export function useProductsQuery(baseOptions?: Apollo.QueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductsQuery, ProductsQueryVariables>(ProductsDocument, options);
+      }
+export function useProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductsQuery, ProductsQueryVariables>(ProductsDocument, options);
+        }
+export type ProductsQueryHookResult = ReturnType<typeof useProductsQuery>;
+export type ProductsLazyQueryHookResult = ReturnType<typeof useProductsLazyQuery>;
+export type ProductsQueryResult = Apollo.QueryResult<ProductsQuery, ProductsQueryVariables>;
+export function refetchProductsQuery(variables?: ProductsQueryVariables) {
+      return { query: ProductsDocument, variables: variables }
+    }
 export const ProductsCountDocument = gql`
     query productsCount {
   productsCount

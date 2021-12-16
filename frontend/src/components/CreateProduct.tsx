@@ -15,7 +15,8 @@ import { SContainer } from './Base/SLayout';
 import { SFormLabel, SHeadingSecondary, SIcon } from './Base/STypography';
 import DisplayError from './Error';
 import {
-  AllProductsDocument,
+  refetchProductsCountQuery,
+  refetchProductsQuery,
   useCreateProductMutation,
 } from '../../types/generated-queries';
 
@@ -43,7 +44,7 @@ export default function CreateProduct() {
     },
   });
   const [createProduct, { loading, error }] = useCreateProductMutation({
-    refetchQueries: [{ query: AllProductsDocument }],
+    refetchQueries: [refetchProductsQuery(), refetchProductsCountQuery()],
   });
   const onSubmit = async (data: TInputs) => {
     const { name, price, description } = data;
@@ -57,8 +58,9 @@ export default function CreateProduct() {
         description,
       },
     });
-    if (res) {
-      router.push('/');
+    if (res && res.data && res.data.createProduct) {
+      // go to the product page
+      router.push(`/product/${res.data.createProduct.id}`);
     }
   };
   const clearForm = () => {
